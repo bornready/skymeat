@@ -16,6 +16,12 @@ app.post('/save', function(req, res){
   	});
 });
 
+app.get('/get/:host', function(req, res){
+  store.findOne({host: req.params.host}).then(function(doc) {
+      res.send("ssh " + doc.conn);
+  });
+});
+
 app.get("/list", function(req, res) {
   res.sendfile('list.html')
 });
