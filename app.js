@@ -16,7 +16,11 @@ app.post('/save', function(req, res){
   	});
 });
 
-app.get('/list', function(req, res){
+app.get("/list", function(req, res) {
+  res.sendfile('list.html')
+});
+
+app.get('/list.json', function(req, res){
 	store.find().toArray().then(function(docs) {
   		res.send(docs);
   	});
