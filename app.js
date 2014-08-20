@@ -5,7 +5,8 @@ require('sugar')
 var app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 
-var store = require('promised-mongo')('mongodb://localhost/mydb').collection('store');
+var mongouri = process.env.MONGOHQ_URL || 'mongodb://localhost/mydb'
+var store = require('promised-mongo')(mongouri).collection('store');
 
 app.post('/save', function(req, res){
 	store.save({host: req.body.host, conn: req.body.conn}, function(err, saved) {
