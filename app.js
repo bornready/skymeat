@@ -15,6 +15,12 @@ app.post('/save', function(req, res){
   	});
 });
 
+app.get('/list', function(req, res){
+	store.find().toArray().then(function(docs) {
+  		res.send(docs);
+  	});
+});
+
 var server = app.listen(3000, function() {
     console.log('Listening on port %d', server.address().port);
 });
