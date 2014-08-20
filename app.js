@@ -9,7 +9,7 @@ var mongouri = process.env.MONGOHQ_URL || 'mongodb://localhost/mydb'
 var store = require('promised-mongo')(mongouri).collection('store');
 
 app.post('/save', function(req, res){
-	store.save({host: req.body.host, conn: req.body.conn}, function(err, saved) {
+	store.update({host: req.body.host},{host: req.body.host, conn: req.body.conn}, {upsert: true}, function(err, saved) {
   		if( err || !saved ) console.log(req.body + " not saved");
   		else console.log(req.body + " saved");
   		res.send(req.body);
