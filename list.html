@@ -1,18 +1,28 @@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.min.js"></script>
+
 <script>
 	$(function(){
 		$.getJSON( "list.json", function( data ) {
 		  var items = [];
 		  $.each( data, function(i, item) {	
-		    items.push( "<tr><td>" + item.host + "</td><td> ssh " + item.conn + "</td></tr>" );
+		    items.push( "<tr><td>" + item.host + "</td><td><span href='#' class='conn' data-clipboard-text='ssh "+item.conn+"'>ssh " + item.conn + "</span></td></tr>" );
 		  });
 		 
 		  $( "<table/>", {
 		    html: items.join( "" )
 		  }).appendTo( "body" );
+		  var client = new ZeroClipboard($('.conn'));
+		  client.on( 'aftercopy', function(event) {
+		  	 $("<span class=copied>Copied!</span>").appendTo($(event.target).parent()).delay(2000).hide(0);
+		  });
+
 		});
+
+
 	})
 </script>
+
 
 <style type="text/css">
 
@@ -43,6 +53,16 @@
 	}
 	
 	a {color:#666;}
+
+	.conn {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
+	.copied {
+		position: absolute;
+		margin-left: 15px;
+	}
 	
 	#content {width:65%; max-width:690px; margin:6% auto 0;}
 	
