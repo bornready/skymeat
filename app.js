@@ -17,7 +17,7 @@ app.post('/save', function(req, res){
 });
 
 app.get('/get/:host', function(req, res){
-  store.findOne({host: req.params.host}).then(function(doc) {
+  store.findOne({host: { $regex:req.params.host } }).then(function(doc) {
       res.send(doc.conn);
   });
 });
